@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { HeartIcon, CakeIcon, SparklesIcon, UserGroupIcon, DocumentPlusIcon } from '@heroicons/react/24/solid';
+import api from '../api';
 
 const Card = ({ to, title, Icon, description }) => (
   <Link to={to} className="group rounded-2xl bg-white shadow-2xl hover:shadow-[0_0_24px_rgba(30,144,255,0.35)] transition transform hover:scale-105 text-center p-6 cursor-pointer border border-transparent hover:border-[#1E90FF]/30">
@@ -12,8 +14,59 @@ const Card = ({ to, title, Icon, description }) => (
 );
 
 export default function Dashboard() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  useEffect(() => {
+    const paymentStatus = searchParams.get('payment');
+    const sessionId = searchParams.get('session_id');
+
+    if (paymentStatus === 'success' && sessionId) {
+      // Verify payment and update user
+      const verifyPayment = async () => {
+        try {
+          const response = await api.post('/billing/confirm-checkout', { sessionId });
+          if (response.data.isPaid) {
+            // Update local storage
+            const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+            localStorage.setItem('user', JSON.stringify({
+              ...currentUser,
+              isPaid: true
+            }));
+            
+            // Show success message
+            setShowSuccessMessage(true);
+            
+            // Clean URL after 3 seconds
+            setTimeout(() => {
+              setSearchParams({});
+              setShowSuccessMessage(false);
+            }, 5000);
+          }
+        } catch (error) {
+          console.error('Payment verification failed:', error);
+        }
+      };
+      
+      verifyPayment();
+    }
+  }, [searchParams, setSearchParams]);
+
   return (
     <div className="space-y-8">
+      {/* Payment Success Banner */}
+      {showSuccessMessage && (
+        <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6">
+          <div className="flex items-center">
+            <div className="text-green-500 text-2xl mr-3">🎉</div>
+            <div>
+              <h3 className="text-green-800 font-semibold">Payment Successful!</h3>
+              <p className="text-green-600 text-sm">Welcome to Family Album Pro! You now have access to all features.</p>
+            </div>
+          </div>
+        </div>
+      )}
+      
       <h1 className="text-3xl font-extrabold bg-gradient-to-r from-[#1E90FF] to-[#8A2BE2] bg-clip-text text-transparent">Dashboard</h1>
       
       {/* Family Section */}

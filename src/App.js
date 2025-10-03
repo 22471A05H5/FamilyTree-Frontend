@@ -10,6 +10,7 @@ import FamilyTree from './pages/FamilyTree';
 import Home from './pages/Home';
 import Upgrade from './pages/Upgrade';
 import UpgradeSuccess from './pages/UpgradeSuccess';
+import PaymentSuccess from './pages/PaymentSuccess';
 import Payment from './pages/Payment';
 import PaymentStatus from './pages/PaymentStatus';
 
@@ -48,7 +49,7 @@ function App() {
               path="/upgrade/success"
               element={
                 <PrivateRoute>
-                  <UpgradeSuccess />
+                  <PaymentSuccess />
                 </PrivateRoute>
               }
             />

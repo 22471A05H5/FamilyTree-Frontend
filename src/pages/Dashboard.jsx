@@ -19,8 +19,20 @@ export default function Dashboard() {
 
   useEffect(() => {
     const paymentStatus = searchParams.get('payment');
+    const upgradeStatus = searchParams.get('upgrade');
     const sessionId = searchParams.get('session_id');
 
+    // Handle free upgrade success
+    if (upgradeStatus === 'success') {
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setSearchParams({});
+        setShowSuccessMessage(false);
+      }, 5000);
+      return;
+    }
+
+    // Handle Stripe payment success
     if (paymentStatus === 'success' && sessionId) {
       // Verify payment and update user
       const verifyPayment = async () => {

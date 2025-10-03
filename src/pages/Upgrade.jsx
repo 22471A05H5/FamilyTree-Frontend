@@ -136,14 +136,25 @@ export default function Upgrade() {
                 onClick={async () => {
                   try {
                     setProcessing(true);
-                    const r = await api.post('/billing/create-checkout-session', { amount: 19900, currency: 'inr' });
-                    if (r?.data?.url) {
-                      window.location.href = r.data.url;
+                    
+                    // Update user to paid status directly (skip Stripe)
+                    const response = await api.post('/billing/free-upgrade');
+                    
+                    if (response.data.isPaid) {
+                      // Update local storage
+                      const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+                      localStorage.setItem('user', JSON.stringify({
+                        ...currentUser,
+                        isPaid: true
+                      }));
+                      
+                      // Redirect to dashboard
+                      window.location.href = '/dashboard?upgrade=success';
                     } else {
-                      setError('Could not start secure checkout.');
+                      setError('Upgrade failed. Please try again.');
                     }
                   } catch (e) {
-                    setError(e?.response?.data?.message || 'Secure checkout failed');
+                    setError(e?.response?.data?.message || 'Upgrade failed');
                   } finally {
                     setProcessing(false);
                   }

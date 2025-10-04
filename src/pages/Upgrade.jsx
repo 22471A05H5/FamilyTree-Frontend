@@ -8,14 +8,14 @@ export default function Upgrade() {
   const [clientSecret, setClientSecret] = useState('');
   const [error, setError] = useState('');
   const [processing, setProcessing] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [cardReady, setCardReady] = useState(false);
+  const [stripeError, setStripeError] = useState('');
 
   const stripeRef = useRef(null);
   const elementsRef = useRef(null);
   const cardRef = useRef(null);
-  const [diag, setDiag] = useState({ stripeLoaded: false, elementsReady: false, clientSecretSet: false });
+  const [cardReady, setCardReady] = useState(false);
   const initOnceRef = useRef(false);
+  const [diag, setDiag] = useState({ stripeLoaded: false, elementsReady: false, clientSecretSet: false });
 
   const user = useMemo(() => {
     try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch { return null; }

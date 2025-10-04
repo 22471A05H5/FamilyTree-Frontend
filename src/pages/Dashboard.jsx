@@ -84,8 +84,9 @@ export default function Dashboard() {
       {/* Family Section */}
       <div>
         <h2 className="text-xl font-semibold text-gray-700 mb-4">Family Management</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <Card to="/family/tree" title="Family Tree" Icon={UserGroupIcon} description="View your family tree" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Card to="/family/tree" title="Family Tree" Icon={UserGroupIcon} description="View traditional family tree" />
+          <Card to="/family/interactive-tree" title="Interactive Tree Builder" Icon={UserGroupIcon} description="Build visual family tree with connections" />
           <Card to="/family/form" title="Family Form" Icon={DocumentPlusIcon} description="Add family members" />
         </div>
       </div>

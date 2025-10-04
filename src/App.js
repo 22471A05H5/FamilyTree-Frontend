@@ -7,9 +7,9 @@ import AlbumPage from './pages/AlbumPage';
 import Footer from './components/Footer';
 import FamilyForm from './pages/FamilyForm';
 import FamilyTree from './pages/FamilyTree';
+import InteractiveFamilyTreePage from './pages/InteractiveFamilyTreePage';
 import Home from './pages/Home';
 import Upgrade from './pages/Upgrade';
-import UpgradeSuccess from './pages/UpgradeSuccess';
 import PaymentSuccess from './pages/PaymentSuccess';
 import Payment from './pages/Payment';
 import PaymentStatus from './pages/PaymentStatus';
@@ -98,6 +98,14 @@ function App() {
               element={
                 <PrivatePaidRoute>
                   <FamilyTree />
+                </PrivatePaidRoute>
+              }
+            />
+            <Route
+              path="/family/interactive-tree"
+              element={
+                <PrivatePaidRoute>
+                  <InteractiveFamilyTreePage />
                 </PrivatePaidRoute>
               }
             />

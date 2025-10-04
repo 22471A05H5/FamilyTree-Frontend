@@ -8,13 +8,15 @@ export default function PaymentPage() {
     try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch { return null; }
   }, []);
 
-  const [method, setMethod] = useState('card'); // card | netbanking
-  const [amount, setAmount] = useState(19900); // in paise, INR 199.00
+  const [processing, setProcessing] = useState(false);
+  const [error, setError] = useState('');
+  const [amount] = useState(19900); // ₹199 in paisa
+  const [paymentMethod, setPaymentMethod] = useState('card');
+  const [method, setMethod] = useState('card');
   const [currency] = useState('inr');
-  const [upiVpa, setUpiVpa] = useState('');
+  const [upiVpa] = useState('');
   const [coupon, setCoupon] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const stripeRef = useRef(null);
   const elementsRef = useRef(null);

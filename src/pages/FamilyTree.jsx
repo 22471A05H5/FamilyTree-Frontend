@@ -93,7 +93,6 @@ function TreeBranch({ node, onSelect, onDelete }) {
           
           {/* Individual child connections - RED lines */}
           {realChildren.map((child, index) => {
-            const hasSpouse = child.spouse;
             const totalChildren = realChildren.length;
             const childPosition = index - (totalChildren - 1) / 2; // -1, 0, 1 for 3 children
             const offsetX = childPosition * 12; // 12rem gap between children

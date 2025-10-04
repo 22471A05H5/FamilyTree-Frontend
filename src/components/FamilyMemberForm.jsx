@@ -92,17 +92,17 @@ const FamilyMemberForm = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="p-6 border-b">
-          <h2 className="text-xl font-semibold text-gray-800">
+        <div className="p-4 sm:p-6 border-b">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-800">
             {editingMember ? 'Edit Family Member' : 'Add Family Member'}
           </h2>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-3 sm:space-y-4">
           {/* Photo Upload */}
           <div className="text-center">
             <div className="w-24 h-24 mx-auto rounded-full overflow-hidden bg-gray-200 border-2 border-dashed border-gray-300 flex items-center justify-center">
@@ -157,8 +157,8 @@ const FamilyMemberForm = ({
             </select>
           </div>
 
-          {/* Dates */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* Dates - Mobile responsive grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Date of Birth
@@ -168,7 +168,7 @@ const FamilyMemberForm = ({
                 name="dateOfBirth"
                 value={formData.dateOfBirth}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
               />
             </div>
             <div>
@@ -180,7 +180,7 @@ const FamilyMemberForm = ({
                 name="dateOfDeath"
                 value={formData.dateOfDeath}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
               />
             </div>
           </div>
@@ -230,19 +230,19 @@ const FamilyMemberForm = ({
             />
           </div>
 
-          {/* Buttons */}
-          <div className="flex gap-3 pt-4">
+          {/* Buttons - Mobile responsive */}
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-3 sm:pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+              className="flex-1 px-4 py-2.5 sm:py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition text-sm sm:text-base"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isLoading}
-              className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition disabled:opacity-50"
+              className="flex-1 px-4 py-2.5 sm:py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition disabled:opacity-50 text-sm sm:text-base"
             >
               {isLoading ? 'Saving...' : editingMember ? 'Update' : 'Add Member'}
             </button>

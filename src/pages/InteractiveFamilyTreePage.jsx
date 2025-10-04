@@ -335,13 +335,14 @@ export default function InteractiveFamilyTreePage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-extrabold bg-gradient-to-r from-[#1E90FF] to-[#8A2BE2] bg-clip-text text-transparent">
+    <div className="space-y-4 sm:space-y-6 px-2 sm:px-4 lg:px-0">
+      {/* Mobile-responsive header */}
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold bg-gradient-to-r from-[#1E90FF] to-[#8A2BE2] bg-clip-text text-transparent text-center sm:text-left">
           Interactive Family Tree Builder
         </h1>
         {saving && (
-          <div className="text-sm text-blue-600 flex items-center gap-2">
+          <div className="text-sm text-blue-600 flex items-center justify-center sm:justify-start gap-2">
             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
             Saving...
           </div>
@@ -349,27 +350,31 @@ export default function InteractiveFamilyTreePage() {
       </div>
 
       {treeData.nodes.length === 0 ? (
-        <div className="text-center py-12 bg-white rounded-xl shadow-sm">
-          <div className="text-6xl mb-4">🌳</div>
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">Start Building Your Interactive Family Tree</h3>
-          <p className="text-gray-500 mb-6">Add family members and connect them visually by drawing lines between nodes</p>
-          <div className="flex gap-4 justify-center">
+        <div className="text-center py-8 sm:py-12 bg-white rounded-xl shadow-sm mx-2 sm:mx-0">
+          <div className="text-4xl sm:text-6xl mb-4">🌳</div>
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-700 mb-2 px-4">
+            Start Building Your Interactive Family Tree
+          </h3>
+          <p className="text-sm sm:text-base text-gray-500 mb-6 px-4">
+            Add family members and connect them visually by drawing lines between nodes
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
             <button
               onClick={() => handleAddMember()}
-              className="bg-gradient-to-r from-[#1E90FF] to-[#8A2BE2] text-white px-6 py-3 rounded-xl hover:shadow-lg transition transform hover:scale-105"
+              className="bg-gradient-to-r from-[#1E90FF] to-[#8A2BE2] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl hover:shadow-lg transition transform hover:scale-105 text-sm sm:text-base"
             >
               Add First Family Member
             </button>
             <button
               onClick={handleNuclearDelete}
-              className="bg-red-800 text-white px-6 py-3 rounded-xl hover:bg-red-900 transition font-bold"
+              className="bg-red-800 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl hover:bg-red-900 transition font-bold text-sm sm:text-base"
             >
               🔥 NUCLEAR DELETE
             </button>
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden mx-2 sm:mx-0">
           <InteractiveFamilyTree
             initialNodes={treeData.nodes}
             initialEdges={treeData.edges}

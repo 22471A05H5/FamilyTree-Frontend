@@ -160,28 +160,43 @@ const InteractiveFamilyTree = ({
     }
   }, [selectedNode, setNodes, setEdges, readOnly]);
 
+  const handleClearAll = useCallback(() => {
+    if (window.confirm('Clear all nodes and edges?')) {
+      setNodes([]);
+      setEdges([]);
+      setSelectedNode(null);
+    }
+  }, [setNodes, setEdges]);
+
   return (
     <div className="w-full h-full bg-gray-50 rounded-lg overflow-hidden border">
-      {/* Toolbar */}
-      <div className="bg-white border-b p-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h2 className="text-lg font-semibold text-gray-800">Family Tree Builder</h2>
-          {selectedNode && (
-            <span className="text-sm text-gray-600">
-              Selected: {selectedNode.data.name}
-            </span>
-          )}
+      {/* Mobile-Responsive Toolbar */}
+      <div className="bg-white border-b p-2 sm:p-3">
+        {/* Top row - Title and selected node */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2 sm:mb-0">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+            <h2 className="text-base sm:text-lg font-semibold text-gray-800">Family Tree Builder</h2>
+            {selectedNode && (
+              <span className="text-xs sm:text-sm text-gray-600">
+                Selected: {selectedNode.data.name}
+              </span>
+            )}
+          </div>
         </div>
         
+        {/* Bottom row - Action buttons */}
         {!readOnly && (
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <button
               onClick={handleAddMember}
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-sm flex items-center gap-2"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-xs sm:text-sm flex items-center gap-1 sm:gap-2"
             >
-              <span>👤</span> Add Member
+              <span>👤</span> 
+              <span className="hidden sm:inline">Add Member</span>
+              <span className="sm:hidden">Add</span>
             </button>
-            <div className="text-xs text-gray-500">
+            
+            <div className="hidden lg:block text-xs text-gray-500">
               New members appear at the top →
             </div>
             
@@ -189,13 +204,13 @@ const InteractiveFamilyTree = ({
               <>
                 <button
                   onClick={handleEditNode}
-                  className="px-3 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition text-sm"
+                  className="px-2 sm:px-3 py-1.5 sm:py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition text-xs sm:text-sm"
                 >
                   Edit
                 </button>
                 <button
                   onClick={handleDeleteNode}
-                  className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-sm"
+                  className="px-2 sm:px-3 py-1.5 sm:py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-xs sm:text-sm"
                 >
                   Delete
                 </button>
@@ -204,16 +219,23 @@ const InteractiveFamilyTree = ({
             
             <button
               onClick={handleSave}
-              className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition text-sm"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition text-xs sm:text-sm"
             >
-              Save Tree
+              Save
+            </button>
+            
+            <button
+              onClick={handleClearAll}
+              className="px-2 sm:px-4 py-1.5 sm:py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-xs sm:text-sm"
+            >
+              🗑️ <span className="hidden sm:inline">Clear All</span>
             </button>
           </div>
         )}
       </div>
 
-      {/* React Flow Canvas */}
-      <div className="w-full h-[600px]" ref={reactFlowWrapper}>
+      {/* React Flow Canvas - Mobile Responsive */}
+      <div className="w-full h-[400px] sm:h-[500px] lg:h-[600px]" ref={reactFlowWrapper}>
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -227,6 +249,17 @@ const InteractiveFamilyTree = ({
           connectionLineType={ConnectionLineType.SmoothStep}
           fitView
           fitViewOptions={{ padding: 0.2 }}
+          // Mobile optimizations
+          panOnScroll={true}
+          panOnScrollSpeed={0.5}
+          zoomOnScroll={true}
+          zoomOnPinch={true}
+          panOnDrag={true}
+          selectNodesOnDrag={false}
+          // Touch-friendly settings
+          nodesDraggable={true}
+          nodesConnectable={true}
+          elementsSelectable={true}
         >
           <Controls />
           <MiniMap 
@@ -238,21 +271,21 @@ const InteractiveFamilyTree = ({
         </ReactFlow>
       </div>
 
-      {/* Enhanced Instructions */}
+      {/* Enhanced Instructions - Mobile Responsive */}
       {!readOnly && (
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-t p-4 text-sm">
-          <div className="flex items-start gap-4">
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-t p-3 sm:p-4 text-xs sm:text-sm">
+          <div className="flex flex-col lg:flex-row lg:items-start gap-3 lg:gap-4">
             <div className="flex-1">
-              <strong className="text-blue-800">🎯 How to Draw Connections:</strong>
+              <strong className="text-blue-800 text-sm sm:text-base">🎯 How to Draw Connections:</strong>
               <ul className="mt-1 text-blue-700 space-y-1">
                 <li>• <strong>Drag nodes</strong> to reposition them anywhere</li>
-                <li>• <strong>Click & drag</strong> from the small gray circles (handles) on nodes</li>
-                <li>• <strong>Connect</strong> to another node's handle to create relationships</li>
+                <li>• <strong>Click & drag</strong> from the gray circles on nodes</li>
+                <li>• <strong>Connect</strong> to another node to create relationships</li>
                 <li>• <strong>Choose</strong> relationship type when prompted</li>
               </ul>
             </div>
             <div className="flex-1">
-              <strong className="text-purple-800">🎨 Connection Types:</strong>
+              <strong className="text-purple-800 text-sm sm:text-base">🎨 Connection Types:</strong>
               <ul className="mt-1 text-purple-700 space-y-1">
                 <li>• <span className="text-red-500">💕 Spouse</span> - Red solid line</li>
                 <li>• <span className="text-blue-500">👨‍👩‍👧‍👦 Parent→Child</span> - Blue solid line</li>

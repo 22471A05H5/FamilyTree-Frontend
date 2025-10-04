@@ -41,7 +41,8 @@ const FamilyMemberNode = ({ data, selected }) => {
 
   return (
     <div className={`
-      family-member-node relative bg-white rounded-xl shadow-lg border-2 p-4 min-w-[200px] max-w-[250px]
+      family-member-node relative bg-white rounded-xl shadow-lg border-2 p-3 sm:p-4 
+      min-w-[160px] sm:min-w-[200px] max-w-[200px] sm:max-w-[250px]
       ${selected ? 'ring-2 ring-blue-500 ring-opacity-50' : ''}
       ${getGenderStyle()}
       hover:shadow-xl transition-all duration-200
@@ -69,8 +70,8 @@ const FamilyMemberNode = ({ data, selected }) => {
       />
 
       {/* Photo */}
-      <div className="flex flex-col items-center mb-3">
-        <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 mb-2 border-2 border-white shadow-md">
+      <div className="flex flex-col items-center mb-2 sm:mb-3">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden bg-gray-200 mb-2 border-2 border-white shadow-md">
           {photo?.url ? (
             <img
               src={photo.url}
@@ -78,42 +79,42 @@ const FamilyMemberNode = ({ data, selected }) => {
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-400 text-2xl">
+            <div className="w-full h-full flex items-center justify-center text-gray-400 text-lg sm:text-2xl">
               {gender === 'male' ? '👨' : gender === 'female' ? '👩' : '👤'}
             </div>
           )}
         </div>
         
         {/* Name */}
-        <h3 className="font-semibold text-gray-800 text-center text-sm leading-tight">
+        <h3 className="font-semibold text-gray-800 text-center text-xs sm:text-sm leading-tight px-1">
           {name}
         </h3>
       </div>
 
-      {/* Details */}
+      {/* Details - Mobile optimized */}
       <div className="text-xs text-gray-600 space-y-1">
         {dateOfBirth && (
-          <div className="flex justify-between">
-            <span>Born:</span>
+          <div className="flex justify-between text-xs">
+            <span className="truncate">Born:</span>
             <span>{new Date(dateOfBirth).getFullYear()}</span>
           </div>
         )}
         
         {dateOfDeath && (
-          <div className="flex justify-between">
-            <span>Died:</span>
+          <div className="flex justify-between text-xs">
+            <span className="truncate">Died:</span>
             <span>{new Date(dateOfDeath).getFullYear()}</span>
           </div>
         )}
         
         {calculateAge() && (
-          <div className="text-center text-gray-500 italic">
+          <div className="text-center text-gray-500 italic text-xs">
             {calculateAge()}
           </div>
         )}
         
         {occupation && (
-          <div className="text-center text-gray-600 font-medium">
+          <div className="text-center text-gray-600 font-medium text-xs truncate">
             {occupation}
           </div>
         )}
